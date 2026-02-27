@@ -1,6 +1,7 @@
 package tanveer.ansari.tododb
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -20,6 +21,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.room.Room
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import tanveer.ansari.tododb.data.Todo
 import tanveer.ansari.tododb.data.TodoDao
@@ -50,6 +54,7 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun TodoScreen(dao: TodoDao) {
+    var todos by remember { mutableStateOf(listOf<Todo>())}
 
     var text by remember { mutableStateOf("") }
     val scope = rememberCoroutineScope()
@@ -70,6 +75,18 @@ fun TodoScreen(dao: TodoDao) {
         ) {
             Text("Save Todo")
         }
+
+        Button(
+            onClick = {
+                scope.launch(Dispatchers.IO) {
+                   todos = dao.getAllTodos()
+                    Log.i("Mainactivity","todo-"+todos.toString())
+                }
+            }
+        ) {
+            Text("get Todos")
+        }
+        Text(text = todos.toString())
     }
 }
 
