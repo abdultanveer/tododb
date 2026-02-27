@@ -87,6 +87,16 @@ fun TodoScreen(dao: TodoDao) {
             Text("get Todos")
         }
         Text(text = todos.toString())
+
+        Button(
+            onClick = {
+                scope.launch(Dispatchers.IO) {
+                   // dao.delete()
+                }
+            }
+        ) {
+            Text("delete Todos")
+        }
     }
 }
 

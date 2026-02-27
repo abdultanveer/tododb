@@ -13,4 +13,7 @@ interface TodoDao {
 
     @Query("SELECT * from Todo ORDER BY text ASC")
     fun getAllTodos(): List<Todo>
+
+//    suspend fun delete(item: Todo)
+
 }
