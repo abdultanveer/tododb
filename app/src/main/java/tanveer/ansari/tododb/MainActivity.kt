@@ -27,20 +27,21 @@ import tanveer.ansari.tododb.data.TodoDatabase
 import tanveer.ansari.tododb.ui.theme.TododbTheme
 
 class MainActivity : ComponentActivity() {
-    val db = Room.databaseBuilder(
-        applicationContext,
-        TodoDatabase::class.java,
-        "todo_db"
-    ).build()
 
-    val dao = db.todoDao()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        val db = Room.databaseBuilder(
+            applicationContext,
+            TodoDatabase::class.java,
+            "todo_db"
+        ).build()
+
         setContent {
             TododbTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-
+                    TodoScreen(db.todoDao())
                 }
             }
         }
