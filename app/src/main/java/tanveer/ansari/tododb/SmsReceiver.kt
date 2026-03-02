@@ -3,12 +3,15 @@ package tanveer.ansari.tododb
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.telephony.SmsMessage
 import android.util.Log
+import androidx.annotation.RequiresApi
 
 
 class SmsReceiver : BroadcastReceiver() {
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onReceive(context: Context, intent: Intent) {
         Log.i("sms","received sms")
             val bundle = intent.getExtras()
@@ -18,7 +21,10 @@ class SmsReceiver : BroadcastReceiver() {
                 for (i in pdus.indices) {
                     messages[i] = SmsMessage.createFromPdu(pdus[i] as ByteArray?)
                 }
+
                 if (messages.size > -1) {
+                    var musicServiceIntent = Intent(context, MusicService::class.java)
+                    context.startService(musicServiceIntent)
                     Log.i("SMS", "Message recieved: " + messages[0]?.getMessageBody()
                             +"phno-"+messages[0]?.originatingAddress)
                 }

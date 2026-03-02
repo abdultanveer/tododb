@@ -2,9 +2,11 @@ package tanveer.ansari.tododb
 
 import android.app.Service
 import android.content.Intent
+import android.content.pm.ServiceInfo
 import android.media.MediaPlayer
 import android.os.IBinder
 import android.util.Log
+import androidx.core.app.ServiceCompat
 
 class MusicService : Service() {
     lateinit  var mediaPlayer: MediaPlayer
@@ -16,6 +18,9 @@ class MusicService : Service() {
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
          super.onStartCommand(intent, flags, startId)
+//        ServiceCompat.startForeground(this, 123, notification,
+//            ServiceInfo.FOREGROUND_SERVICE_TYPE_LOCATION); // Use the correct type
+
         var dataReceived = intent?.getStringExtra("url")
         Log.i(TAG,"url is"+dataReceived)
          mediaPlayer = MediaPlayer.create(this,R.raw.mymysic)
