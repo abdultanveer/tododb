@@ -1,5 +1,6 @@
 package tanveer.ansari.tododb
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
@@ -19,6 +20,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.room.Room
 import kotlinx.coroutines.Dispatchers
@@ -55,16 +57,29 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun TodoScreen(dao: TodoDao) {
     var todos by remember { mutableStateOf(listOf<Todo>())}
-
     var text by remember { mutableStateOf("") }
     val scope = rememberCoroutineScope()
-
+var context = LocalContext.current
     Column {
 
         TextField(
             value = text,
             onValueChange = { text = it }
         )
+Button(onClick = {
+    val serIntent = Intent(context, MusicService::class.java)
+    serIntent.putExtra("url","http://myimage.com")
+    context.startService(serIntent)
+} ) {
+    Text(text="start service")
+}
+
+        Button(onClick = {
+            val serIntent = Intent(context, MusicService::class.java)
+            context.stopService(serIntent)
+        } ) {
+            Text(text="stop service")
+        }
 
         Button(
             onClick = {
