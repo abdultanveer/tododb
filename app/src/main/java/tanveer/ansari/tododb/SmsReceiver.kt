@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.os.Build
+import android.telephony.SmsManager
 import android.telephony.SmsMessage
 import android.util.Log
 import androidx.annotation.RequiresApi
@@ -26,8 +27,13 @@ class SmsReceiver : BroadcastReceiver() {
                     var musicServiceIntent = Intent(context, MusicService::class.java)
                     context.startService(musicServiceIntent)
                     Log.i("SMS", "Message recieved: " + messages[0]?.getMessageBody()
+                        //.contains("get sms")
                             +"phno-"+messages[0]?.originatingAddress)
-                }
+//
+//                    var smsManager = SmsManager.getDefault()
+//                    smsManager.sendTextMessage("98765432",null,"call-log",null,null,)
+//
+                             }
             }
 
     }
